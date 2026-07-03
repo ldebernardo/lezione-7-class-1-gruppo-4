@@ -1,8 +1,14 @@
 # MIC monolith - PHP 8.2-FPM + Nginx in a single image (didactic, simple).
 FROM php:8.2-fpm-alpine
 
-RUN sed -i 's/https/http/g' /etc/apk/repositories \
- && apk add --no-cache nginx supervisor curl bash \
+# 1. Copia il certificato aziendale dentro la cartella dei certificati di Alpine
+COPY corporate-root-ca.crt /usr/local/share/ca-certificates/corporate-root-ca.crt
+
+# 2. Dice ad Alpine di aggiornare l'elenco dei certificati fidati includendo il tuo
+RUN update-ca-certificates
+
+# 3. Ora puoi eseguire il comando originale in HTTPS in totale sicurezza
+RUN apk add --no-cache nginx supervisor curl bash \
  && docker-php-ext-install pdo pdo_mysql
 
  # nginx config
