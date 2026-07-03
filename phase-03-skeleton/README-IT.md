@@ -105,6 +105,17 @@ mette su un vero layer di persistenza.
 > Prerequisiti: Rancher Desktop con il motore Docker. Go locale (1.22+) e' opzionale — i test
 > possono girare nel servizio Compose `test`.
 
+Se non hai Go installato localmente, usa solo Docker Compose:
+
+```bash
+cd phase-03-skeleton
+docker compose run --rm test
+docker compose run --rm test go test ./entities -run TestInventoryStressKeepsStockSane -count=10
+docker compose run --rm test go test -race ./...
+```
+
+Gli stessi comandi sono disponibili anche via `make test`, `make stress` e `make race`.
+
 Hai **finito** quando il servizio parte e i tuoi test per ogni invariante sono verdi:
 
 ```bash

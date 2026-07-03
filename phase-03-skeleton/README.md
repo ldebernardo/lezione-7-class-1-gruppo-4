@@ -104,6 +104,17 @@ when the BC grows a real persistence layer.
 > Prerequisites: Rancher Desktop with the Docker engine. Local Go (1.22+) is optional — tests can
 > run inside the Compose `test` service.
 
+If you do not have Go installed locally, use Docker Compose only:
+
+```bash
+cd phase-03-skeleton
+docker compose run --rm test
+docker compose run --rm test go test ./entities -run TestInventoryStressKeepsStockSane -count=10
+docker compose run --rm test go test -race ./...
+```
+
+The same commands are also available as `make test`, `make stress`, and `make race`.
+
 You are **done** when the service boots and your own tests for every invariant are green:
 
 ```bash
